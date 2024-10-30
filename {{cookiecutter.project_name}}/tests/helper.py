@@ -45,7 +45,7 @@ def get_logger(module_name: str) -> logging.Logger:
     my_logger.setLevel(logging.INFO)
 
     console_handler = logging.StreamHandler(sys.stdout)
-
+{% raw %}
     formatter = logging.Formatter(
         "%(asctime)s - {%(name)s} - {%(filename)s:%(funcName)s:%(lineno)d} - "
         "%(levelname)s - %(message)s"
@@ -55,7 +55,7 @@ def get_logger(module_name: str) -> logging.Logger:
     my_logger.addHandler(console_handler)
     return my_logger
 
-
+{% endraw %}
 module_logger = get_logger(str(__name__))
 
 

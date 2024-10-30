@@ -36,19 +36,19 @@ clean-venv: ## re-create virtual env
        pip install -r requirements.txt; \
     )
 
-pylint: ## run pylint on python files
+pylint: .venv ## run pylint on python files
 	( \
        . .venv/bin/activate; \
        git ls-files '*.py' | xargs pylint --max-line-length=90; \
     )
 
-black: ## use black to format python files
+black: .venv ## use black to format python files
 	( \
        . .venv/bin/activate; \
        git ls-files '*.py' |  xargs black --line-length=79; \
     )
 
-black-check: ## use black to format python files
+black-check: .venv ## use black to format python files
 	( \
        . .venv/bin/activate; \
        git ls-files '*.py' |  xargs black --check --line-length=79; \
@@ -59,19 +59,19 @@ shellcheck: ## use black to format python files
        git ls-files '*.sh' |  xargs shellcheck --format=gcc; \
     )
 
-unittest: ## run test that don't require deployed resources
+unittest: .venv ## run test that don't require deployed resources
 	( \
        source .venv/bin/activate; \
        python3 -m pytest -v -m "unit" tests/; \
     )
 
-unit-update_golden: ## update test golden files using the current actual results
+unit-update_golden: .venv ## update test golden files using the current actual results
 	( \
        source .venv/bin/activate; \
        python3 -m pytest -v -m "unit" tests/ --update_golden; \
     )
 
-static: black shellcheck pylint unittest ## run all local static checks
+static: .venv black shellcheck pylint unittest ## run all local static checks
 
 clean-cache: ## clean python adn pytest cache data
 	@find . -type f -name "*.py[co]" -delete -not -path "./.venv/*"

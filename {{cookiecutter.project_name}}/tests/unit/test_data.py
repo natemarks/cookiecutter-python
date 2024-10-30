@@ -1,17 +1,30 @@
-""" test module: {{cookiecutter.project_slug}}/data.py"""
+#!/usr/bin/env python3
+"""data classes for stack/iam_xray.py
+
+There is one App_Vpc per environment
+
+
+"""
+# pylint: disable=duplicate-code
 import pytest
+from tests.helper import Case
+from {{cookiecutter.project_slug}}.data import return_data
 
-
-from {{cookiecutter.project_slug}}.data import RDSSecret
 
 
 @pytest.mark.unit
-def test_data():
-    """meaningless test to verify pytest"""
-    result = RDSSecret(
-        username="my_user",
-        password="my_password",
-        dbInstanceIdentifier="cts-cts-staging",
-        host="cts-cts-staging.cwi3fcl24jgg.us-east-1.rds.amazonaws.com",
-    )
-    assert result.engine == "postgres"
+@pytest.mark.parametrize(
+    "contents",
+    [
+        pytest.param("some data", id="some_data"),
+        pytest.param("some data", id="some_other_data"),
+    ],
+)
+def test_return_data(request, contents, update_golden):
+    """test app_vpc stack"""
+
+    case = Case(request)
+
+    if update_golden:
+        case.update_expected(return_data(contents))
+    assert return_data(contents) == case.expected()
