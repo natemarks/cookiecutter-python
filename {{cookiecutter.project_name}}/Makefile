@@ -48,6 +48,12 @@ black: .venv ## use black to format python files
        git ls-files '*.py' |  xargs black --line-length=79; \
     )
 
+mypy: .venv ## use mypy for type checking
+	( \
+       . .venv/bin/activate; \
+       git ls-files '*.py' |  xargs python3 -m mypy; \
+    )
+
 black-check: .venv ## use black to format python files
 	( \
        . .venv/bin/activate; \
@@ -71,7 +77,7 @@ unit-update_golden: .venv ## update test golden files using the current actual r
        python3 -m pytest -v -m "unit" tests/ --update_golden; \
     )
 
-static: .venv black shellcheck pylint unittest ## run all local static checks
+static: .venv black mypy shellcheck pylint unittest ## run all local static checks
 
 clean-cache: ## clean python adn pytest cache data
 	@find . -type f -name "*.py[co]" -delete -not -path "./.venv/*"
