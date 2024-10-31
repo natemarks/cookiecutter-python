@@ -15,6 +15,7 @@ import logging
 import os
 from pathlib import Path
 import sys
+from typing import Dict, Any
 import pytest
 
 
@@ -96,7 +97,7 @@ class Case:
 
     def get_test_dir(self) -> str:
         """return the project tests directory path"""
-
+        # type: ignore_line
         wrds = self.request.fspath.dirname.split(os.path.sep)
         while wrds[-1] != "tests":
             wrds.pop()
@@ -149,7 +150,7 @@ class Result:
     """test result"""
 
     def __init__(self, output_dir: Path):
-        self.actual = {}
+        self.actual = {} # type: Dict[str,Any]
         self.output_dir = str(output_dir)
         self.set_project_dir()
 
