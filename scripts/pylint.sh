@@ -6,5 +6,7 @@ find . -type f -name "*.py" \
 -not -path "*/app.py" \
 -not -path "*/__init__.py" \
 -not -path "*/*_stack.py" \
+-not -path "*/*_stack.py" \
+-not -path "*/tests/helper.py" \
 -print0 \
 | xargs -0 pylint --max-line-length=90

@@ -4,5 +4,6 @@ find . -type f -name "*.py" \
 -not -path "*/.venv/*" \
 -not -path "*/tests/unit/*" \
 -not -path "*/app.py" \
+-not -path "*/tests/helper.py" \
 -print0 \
 | xargs -0 black --line-length=79
