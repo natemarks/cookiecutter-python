@@ -5,7 +5,7 @@ log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(linen
 log_cli_date_format = "%Y-%m-%d %H:%M:%S"
 addopts = "--strict-markers"
 markers = [
-    "cookiecutter: cookiecutter tests",
+    "deployment: must be run after deployment",
     "experimental: experimental tests",
     "unit: should be run on every commit",
 ]

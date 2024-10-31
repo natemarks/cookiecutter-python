@@ -1,11 +1,13 @@
 """ test module: {{cookiecutter.project_slug}}/data.py"""
 from dataclasses import dataclass, asdict
+import logging
 from pathlib import Path
 import pytest
 
 from cookiecutter.main import cookiecutter
 
 TEMPLATE_DIRECTORY = str(Path(__file__).parent.parent)
+LOGGER = logging.getLogger(__name__)
 
 
 @dataclass
@@ -35,13 +37,16 @@ DEFAULT_INPUT = CaseInput(
         pytest.param(DEFAULT_INPUT, id="default"),
     ],
 )
-def test_run_cookiecutter(tmpdir, case_input):
+def test_run_cookiecutter(request, tmpdir, case_input):
     """test cookiecutter"""
     # Convert tmpdir to a string path to use with cookiecutter output_dir
     output_dir = str(tmpdir)
+    LOGGER.info(
+        "creating test case %s in: %s", request.node.callspec.id, output_dir
+    )
     result_path = cookiecutter(
         template=TEMPLATE_DIRECTORY,
-        output_dir=str(tmpdir),
+        output_dir=output_dir,
         extra_context=asdict(case_input),
         no_input=True,
     )
