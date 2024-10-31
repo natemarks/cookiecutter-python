@@ -3,6 +3,6 @@
 
 
 """
-def return_data(input: str):
+def return_data(i: str):
     """generate data"""
-    return input
+    return i
